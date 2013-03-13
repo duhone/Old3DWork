@@ -1,0 +1,62 @@
+==============================================================================
+ SHADERTECH.COM CONTEST ENTRY FORM
+==============================================================================
+
+ Full Name: Eric Duhon
+ E-Mail Address: duhone@hpt-interactive.com
+ Street Address: 9757 Windwater dr. #1210
+ City/State/Zip: Houston, TX 77075
+ Country: USA
+ Phone: 713-947-0668
+
+ Entry Descriptive Name: Plank's Star
+ Entry File Name: EricDuhon-bin.zip and EricDuhon-src.zip
+ Entry Size (In Bytes): 161k for binary
+ Description Of Your Entry (explaining what the entry does and how it works):
+ Star shader. 11:53 now, Out of time. See article for more
+ 
+ Event Category: Materials & Environmental Effects 
+
+ * Note that the event category you list is just a suggestion, we will place
+   it within the category we feel it best fits.
+
+==============================================================================
+
+ To submit your contest entry, please follow the instructions below:
+
+ Your entry must be submitted in the form of two zip files.  One zip file will
+ contain only the binaries and data files neccesary to actually run your demo.
+ The other zip file will contain only the source code to your entry. 
+
+ Please name your zip files clearly, to indicate which file is which.  The
+ recommended approach is to name your files like this:
+ 
+ FullName-bin.zip  (Binaries zip file)
+ FullName-src.zip  (Source code zip file)
+
+ Where FullName is your name.
+ 
+ Once you've created your zip files, please make sure they're under the size limit
+ outlined in the terms and conditions for the contest.  When you're ready to submit
+ them, simply e-mail the files to contest@shadertech.com.  Please include this
+ submission form with your e-mail as well!!!  Please also be sure you've included
+ the required license.txt file in the relevant zip files, as outlined in the contest
+ terms and conditions.
+
+ Within 48 hours of receiving your entry, we will reply with a confirmation e-mail
+ that it was received.  If you do not hear from us within this time frame, please
+ write to us again.
+
+ If you have any questions about submitting entries, simply e-mail us.  We
+ recommend that you submit your demo a few days before the deadline so as to give us
+ time to let you know of any difficulties that may have come up when trying
+ to run your entry.
+
+ Before submitting your files, be sure you've read and agree to the
+ official terms and conditions found here:
+ 
+ http://www.shadertech.com/contest/
+   
+==============================================================================
+ WWW.SHADERTECH.COM
+

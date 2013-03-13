@@ -1,0 +1,45 @@
+ps.1.4
+
+;sample bump map
+texld r0,t0
+
+
+;read in view vec
+texcrd r2.rgb,t2.xyz
+texcrd r3.rgb,t3.xyz
+texcrd r4.rgb,t4.xyz
+texcrd r5.rgb,t5.xyz
+
+;calc N*H
+texcrd r1.rgb,t1.xyz
+dp3_sat r1,r0_bx2,r1_bx2
+
+;transform normal
+dp3 r3.r,r0_bx2,r3
+dp3 r3.g,r0_bx2,r4
+dp3 r3.b,r0_bx2,r5
+
+;calc reflect view
+dp3 r5,r3,r2
+add r4,r5,r5
+mad r4.rgb,r4,r3,-r2
+
+
+phase
+;sample cube
+texld r2,r4
+
+;specular power
+texld r1,r1
+
+;diffuse
+dp3_sat r4,r0_bx2,v0_bx2
+mul r0,r4,c2
+
+;specular and ambient
+mad r0,r1,c4,r0
+add r0,r0,c3
+
+;cube map
+mad r0,r2,c4,r0
+

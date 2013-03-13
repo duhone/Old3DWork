@@ -1,0 +1,10 @@
+vs.1.1
+
+;transform pos
+dp4 oPos.x, v0, c2
+dp4 oPos.y, v0, c3
+dp4 oPos.z, v0, c4
+dp4 oPos.w, v0, c5
+
+;color
+mov oD0, c10

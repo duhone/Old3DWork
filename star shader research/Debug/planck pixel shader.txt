@@ -1,0 +1,86 @@
+ps_2_x
+
+//f sample wavelength. 700nm red, 546nm green, 435nm blue, 100nm uv
+def c10,20553.84,26351.07,33075.14,1 //hc/kf  r,g,b
+def c11,33.59695,92.99935,298.64856,1 //2(pi)hc^2/f^5  r,g,b
+def c20,0,59.32858e9,0,1 //2(pi)hc/f^5  uv
+def c21,0,143876.87,0,1 //hc/kf  uv
+def c12,0.5,0.5,0.5,1
+def c13,-1,-1,-1,-1
+def c15,0.8,0.8,0.8,1  //range in brightness between center and edge
+def c16,0.2,0.2,0.2,1  //brightness at edge
+def c17,2.718282,1,1,1  //e
+
+dcl t0.rg  //texture coords
+dcl t1.rgb //view vector
+dcl t2.rgb //normal vector
+
+dcl_2d s0
+
+
+texld r0,t0,s0  //temperature texture
+
+//renormalize view and normal vectors
+nrm r7,t1
+nrm r8,t2
+
+//view based brightness adjustment
+//abs(((abs((NdotV)-1))^4)-1)
+dp3 r5.rgb,r7,r8
+add r5.rgb,r5,c13
+abs r5.rgb,r5
+mul r5.rgb,r5,r5
+mad r5.rgb,r5,r5,c13
+abs r5.rgb,r5
+//adjust view based brightness range from .2-1. 1 at center .2 at edges
+mul r5.rgb,r5,c15
+add r5.rgb,r5,c16  //view lighting
+
+
+//set range of temperature map to 10% of the current average temperature.
+//(((average temperature)*0.1)*temperture from texture)+average temperature
+mov r4,c12
+mul r3.rgb,r4,c6 //10% of temperature
+mul r0.rgb,r0,r3 //make color range
+add r1.rgb,r0,c6 //add in average temperature
+
+//take reciprical of temperature
+rcp r1.r,r1.r
+rcp r1.g,r1.g
+rcp r1.b,r1.b
+
+//if b0 do ub else do visible
+//multiply by hc/kf
+if b0
+	mul r1.rgb,r1,c21
+else
+	mul r1.rgb,r1,c10
+endif
+
+//e^(last result)
+pow r6.r,c17.x,r1.r
+pow r6.g,c17.x,r1.g
+pow r6.b,c17.x,r1.b
+add r1.rgb,r6,c13//add 1
+
+//reciprical
+rcp r1.r,r1.r
+rcp r1.g,r1.g
+rcp r1.b,r1.b
+
+//if b0 uv else visible
+//multiply by 2(pi)hc^2/f^5
+if b0
+ mul r1.rgb,r1,c20
+else
+ mul r1.rgb,r1,c11
+endif
+
+//multiply plank result by view dependent brightness
+mul r1.rgb,r1,r5
+//multiply by brightness factor
+mul r1.rgb,r1,c18
+
+mov r1.a,c12.a
+mov oC0,r1
+

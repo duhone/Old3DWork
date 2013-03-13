@@ -1,0 +1,14 @@
+ps_2_0
+
+def c1,1,1,1,1
+
+dcl t0.rg
+dcl t1.rgb
+
+dcl_2d s0
+
+texld r0,t0,s0  //base texture
+
+add r0.rgb,r0,t1
+mov r0.a,c1.a
+mov oC0,r0

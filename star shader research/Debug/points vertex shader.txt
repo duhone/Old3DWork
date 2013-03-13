@@ -1,0 +1,25 @@
+vs_1_1
+
+def c4,0,0,1,1
+def c5,0.5,1,1,1
+
+dcl_position v0 //point position
+dcl_texcoord v1 //amount of heat to add/remove
+
+;set output position into temperature texture
+mov r0.xy,v0.xy
+mov r0.zw,c4.zw
+
+//amount of heat to add
+mov r1.xyz,v1.xxx
+mov r1.w,c5.w
+
+mov oPos,r0
+mov oT1,r1
+
+//position in texture to read from
+mul r0.xy,r0.xy,c5.xx
+add r0.xy,r0.xy,c5.xx
+sub r0.y,c5.w,r0.y
+add r0.xy,r0.xy,c6.zw
+mov oT0,r0

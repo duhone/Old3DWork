@@ -1,0 +1,37 @@
+vs_1_1
+
+def c4,0,0,1,1
+def c5,0.5,1,1,1
+//c6 is step size to next texel. 1/texture width,1/texture height,1/2*texture width,1/2*texture height,
+
+dcl_position v0 //rectangle position, covering entire temperature map
+
+//ouput position
+mov r0.xy,v0.xy
+mov r0.zw,c4.zw
+mov oPos,r0
+
+//center position to sample
+mul r0.xy,r0.xy,c5.xx
+add r0.xy,r0.xy,c5.xx
+sub r0.y,c5.w,r0.y
+add r0.xy,r0.xy,c6.zw
+mov oT0,r0
+
+//aditional sample points for heat distribution filter
+mov r1,r0
+add r1.x,r1.x,c6.x
+mov oT1,r1
+
+mov r1,r0
+sub r1.x,r1.x,c6.x
+mov oT2,r1
+
+mov r1,r0
+add r1.y,r1.y,c6.y
+mov oT3,r1
+
+mov r1,r0
+sub r1.y,r1.y,c6.y
+mov oT4,r1
+
