@@ -1,0 +1,26 @@
+; Generates texture coordinates based
+; on the input normal.  The texture coordinates
+; represent a ray from the eye reflected from the object, 
+; based on the normal.  
+; This is an implementation of D3D's CAMERASPACEREFLECTIONVECTOR
+
+vs.1.0
+
+; Transform position
+dp4 oPos.x, v0, c2
+dp4 oPos.y, v0, c3
+dp4 oPos.z, v0, c4
+dp4 oPos.w, v0, c5   
+
+mov oD0,c0
+mov oD1,c0
+
+add r2,c24,-v0
+dp3 r3, r2,v1
+add r3, r3, r3
+mul r3, v1, r3
+add oT0, r2, -r3
+mov oT0.w, c1.x
+    
+	
+mov oT1,c1 

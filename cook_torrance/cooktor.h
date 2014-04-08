@@ -1,0 +1,30 @@
+
+#define CV_ZERO 0
+#define CV_ONE 1
+
+#define CV_WORLDVIEWPROJ_0 2
+#define CV_WORLDVIEWPROJ_1 3
+#define CV_WORLDVIEWPROJ_2 4
+#define CV_WORLDVIEWPROJ_3 5
+
+
+#define CV_COLOR_DIFUSE 9
+#define CV_COLOR_SPECULAR 23
+
+
+#define CV_LIGHT1_POS 15
+#define CV_LIGHT1_VIEWPOS 24
+
+
+#define CV_MAT_PROP 21
+#define CV_CONSTANTS 22
+
+#define CV_LIGHT_PROP 25
+
+#define CV_COOK_CONSTANTS 26
+#define CV_COOK_M  27
+#define CV_LIGHT1_POS2 28
+#define CV_LIGHT_PROP2 29
+
+#define CP_COLOR_SPECULAR 0
+#define CP_SPEC_AMOUNT 2

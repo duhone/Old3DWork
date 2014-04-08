@@ -1,0 +1,14 @@
+
+vs.1.0
+
+; Transform to clip space
+dp4 oPos.x, v0, c2
+dp4 oPos.y, v0, c3
+dp4 oPos.z, v0, c4
+dp4 oPos.w, v0, c5   
+
+
+mov oD0, c9
+mov oD1,c0
+
+        

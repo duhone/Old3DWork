@@ -1,0 +1,189 @@
+vs.1.0
+
+; Transform to clip space
+dp4 oPos.x, v0, c2
+dp4 oPos.y, v0, c3
+dp4 oPos.z, v0, c4
+dp4 oPos.w, v0, c5   
+
+; Dot normal with light direction in world space
+;create light vector
+add r4,c15,-v0
+;view vector
+add r5,c24,-v0
+;normalize light vector
+dp3 r0,r4,r4
+rsq r0,r0
+;save 1/distance for use in attenuation
+mov r11,r0
+mul r4,r4,r0
+;normalize view vector
+dp3 r0,r5,r5
+rsq r0,r0
+mul r7,r5,r0
+;halfwayvector
+add r6,r4,r7
+;normalize halfway vector
+dp3 r0,r6,r6
+rsq r0,r0
+mul r6,r6,r0
+;n dot h
+dp3 r0,v1,r6
+;n dot v
+dp3 r1,v1,r7
+;n dot l
+dp3 r2,v1,r4
+;1 over v dot h
+dp3 r3,r7,r6
+rcp r3,r3
+;1 over n dot h squared
+mul r4,r0,r0
+rcp r4,r4
+
+mul r5.x,r2.x,c21.y
+mul r5.xyz,r5.xxx,c9.xyz
+
+;calc attenuation
+mul r11.x,r11.x,c25.w
+mul r11.xyz,r11.xxx,c25.xyz
+mul r5.xyz,r5.xyz,r11.xyz
+max r5.xyz,r5.xyz,c0.xyz
+;ambient
+mov r6.xyz,c9.xyz
+mad r9.xyz,r6.xyz,c21.xxx,r5.xyz
+;mov oD0.xyz,r9.xyz
+;max r9.xyz,r9.xyz,c0.xyz
+
+
+;calc b
+rcp r8.x,r1.x
+mul r8.x,r8.x,c27.z
+
+;calc d
+add r6.w,c26.x,-r4.x
+mul r6.w,r6.w,c27.x
+expp r6,r6.w
+mul r6.x,r6.z,r4.x
+mul r6.x,r6.x,r4.x
+;mul r6.x,r6.x,c27.x
+mul r5.x,r8.x,r6.x
+;mul r6.x,r6.x,c26.y
+;min r6.x,r6.x,c1.x
+
+;cacl g
+mul r6.x,r0.x,r1.x
+mul r6.y,r0.x,r2.x
+mul r6.xy,r6.xy,c26.zz
+mul r6.xy,r6.xy,r3.xx
+min r6.x,r6.x,r6.y
+min r6.x,r6.x,c1.x
+mul r5.x,r5.x,r6.x
+
+
+;calc f
+
+add r6.x,c1.x,-r2.x
+mul r1.x,r6.x,r6.x
+mul r1.x,r1.x,r1.x
+mul r6.xyz,r6.xxx,r1.xxx
+mov r0.xyz,c1.xyz
+add r1.xyz,r0.xyz,-c23.xyz
+mad r6.xyz,r1.xyz,r6.xyz,c23.xyz
+mul r5.xyz,r5.xxx,r6.xyz
+
+;calc specular
+;mul r7,r1,r2
+;mul r6.x,r1.x,c26.w
+;rcp r6.x,r6.x
+;mul r6.xyz,r6.xxx,r5.xyz
+;mul r7.xyz,r7.xyz,r6.xyz
+;mul r6.xyz,r6.xxx,v2.xyz
+mul r6.xyz,r5.xyz,r11.xyz
+mul r6.xyz,r6.xyz,c21.zzz
+;mov oD1.xyz,r10.xyz
+;mul r6.xyz,r6.xyz,c26.yyy
+max r10.xyz,r6.xyz,c0.xyz 
+;add r9.xyz,r9.xyz,r6.xyz
+
+;58 instructions      
+
+;second light
+
+; Dot normal with light direction in world space
+;create light vector
+add r4,c28,-v0
+;normalize light vector
+dp3 r0,r4,r4
+rsq r0,r0
+;save 1/distance for use in attenuation
+mov r11,r0
+mul r4,r4,r0
+;halfwayvector
+add r6,r4,r7
+;normalize halfway vector
+dp3 r0,r6,r6
+rsq r0,r0
+mul r6,r6,r0
+;n dot h
+dp3 r0,v1,r6
+;n dot v
+dp3 r1,v1,r7
+;n dot l
+dp3 r2,v1,r4
+;1 over v dot h
+dp3 r3,r7,r6
+;max r3,r3,c0
+rcp r3,r3
+;1 over n dot h squared
+mul r4,r0,r0
+rcp r4,r4
+
+mul r5.x,r2.x,c21.y
+mul r5.xyz,r5.xxx,c9.xyz
+
+;calc attenuation
+mul r11.x,r11.x,c29.w
+mul r11.xyz,r11.xxx,c29.xyz
+mul r5.xyz,r5.xyz,r11.xyz
+max r5.xyz,r5.xyz,c0.xyz
+;ambient
+mov r6.xyz,c9.xyz
+mad r6.xyz,r6.xyz,c21.xxx,r5.xyz
+add oD0.xyz,r9.xyz,r6.xyz
+
+;calc d
+add r6.w,c26.x,-r4.x
+mul r6.w,r6.w,c27.x
+expp r6,r6.w
+mul r6.x,r6.z,r4.x
+mul r6.x,r6.x,r4.x
+mul r5.x,r6.x,r8.x
+
+;cacl g
+mul r6.x,r0.x,r1.x
+mul r6.y,r0.x,r2.x
+mul r6.xy,r6.xy,c26.zz
+mul r6.xy,r6.xy,r3.xx
+min r6.x,r6.x,r6.y
+min r6.x,r6.x,c1.x
+mul r5.x,r5.x,r6.x
+
+;calc f
+
+add r6.x,c1.x,-r2.x
+mul r1.x,r6.x,r6.x
+mul r1.x,r1.x,r1.x
+mul r6.xyz,r6.xxx,r1.xxx
+mov r0.xyz,c1.xyz
+add r1.xyz,r0.xyz,-c23.xyz
+mad r6.xyz,r1.xyz,r6.xyz,c23.xyz
+mul r5.xyz,r5.xxx,r6.xyz
+
+
+;calc specular
+mul r6.xyz,r5.xyz,r11.xyz
+mul r6.xyz,r6.xyz,c21.zzz
+max r6.xyz,r6.xyz,c0.xyz
+add oD1.xyz,r10.xyz,r6.xyz 
+
+;108

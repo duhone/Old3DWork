@@ -1,0 +1,109 @@
+
+vs.1.0
+
+; Transform to clip space
+dp4 oPos.x, v0, c2
+dp4 oPos.y, v0, c3
+dp4 oPos.z, v0, c4
+dp4 oPos.w, v0, c5   
+
+;create light vector
+add r1,c15,-v0
+;normalize light vector
+dp3 r2,r1,r1
+rsq r2,r2
+;save 1/distance for use in attenuation
+mov r3,r2
+mul r1,r1,r2
+;l dot n
+dp3 r10, v1, r1
+;calc color
+mul r0,r10,c21.y
+mul r0,r0,c9
+
+;calc attenuation
+mul r3,r3,c25.w
+mul r4,r3,c25
+mul r0,r0,r4
+max r0,r0,c0
+;ambient
+mov r3,c9
+mad r9,r3,c21.x,r0
+
+;specular
+;view vector
+add r6,c24,-v0
+;normalize view vector
+dp3 r3,r6,r6
+rsq r3,r3
+mul r6,r6,r3
+;halfwayvector
+add r1,r1,r6
+;normalize halfway vector
+dp3 r2,r1,r1
+rsq r2,r2
+mul r1,r1,r2
+;h dot n
+dp3 r1,v1,r1
+mov r1.w, c21.w
+mov r1.x,r10.x
+;calc specular
+lit r2, r1
+mul r2.z,r2.z,c21.z
+mul r11.xyzw,r2.zzzz,r4.xyzw
+max r11,r11,c0  
+  
+;second light  
+  
+; Dot normal with light direction in world space
+;create light vector
+add r1,c28,-v0
+;normalize light vector
+dp3 r2,r1,r1
+rsq r2,r2
+;save 1/distance for use in attenuation
+mov r3,r2
+mul r1,r1,r2
+;l dot n
+dp3 r10, v1, r1
+;calc color
+mul r0,r10,c21.y
+mul r0,r0,c9
+
+;calc attenuation
+mul r3,r3,c29.w
+mul r4,r3,c29
+mul r0,r0,r4
+max r0,r0,c0
+;ambient
+mov r3,c9
+mad r5,r3,c21.x,r0
+add oD0,r9,r5
+
+;specular
+;halfwayvector
+add r1,r1,r6
+;normalize halfway vector
+dp3 r2,r1,r1
+rsq r2,r2
+mul r1,r1,r2
+;h dot n
+dp3 r1,v1,r1
+mov r1.w, c21.w
+mov r1.x,r10.x
+;calc specular
+lit r2, r1
+mul r2.z,r2.z,c21.z
+mul r2.xyzw,r2.zzzz,r4.xyzw
+max r2,r2,c0
+add oD1,r11,r2
+    
+add r2,c24,-v0
+dp3 r3, r2,v1
+add r3, r3, r3
+mul r3, v1, r3
+add oT0, r2, -r3
+mov oT0.w, c1.x
+    
+	
+mov oT1,c1 
