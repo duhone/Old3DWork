@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data filename="data.edf">
+	<fonts>
+		<font name="font" height="14" width="10" weight="bold" italic="false" facename="ariel"/>
+	</fonts>
+	<textblocks>
+		<textblock name="stdblock" font="font" text="fps"/>
+	</textblocks>
+	<effects>
+		<effect name="builtin-sprite2d" filename="effects\sprite.fx"/>
+	</effects>
+	<textures>
+		<texture name="photo" filename="textures\photo.dds"/>
+		<texture name="spriteset" filename="textures\spriteset.dds"/>
+	</textures>
+	<sprites>
+		<sprite name="photo" alpha="false">
+			<frameset name="only" texture="photo" framewidth="592" fps="0"/>
+		</sprite>
+		<sprite name="asprite" alpha="true">
+			<frameset name="only" texture="spriteset" framewidth="92" fps="10"/>
+		</sprite>
+	</sprites>
+
+</data>

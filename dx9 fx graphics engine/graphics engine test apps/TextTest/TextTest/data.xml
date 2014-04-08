@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<data filename="data.edf">
+  <fonts>
+    <font name="smallfont" height="10" width="10" weight="bold" italic="false" facename="ariel"/>
+    <font name="bigfont" height="36" width="36" weight="bold" italic="false" facename="ariel"/>
+  </fonts>
+  <textblocks>
+    <textblock name="statblock" font="smallfont" text="fps"/>
+    <textblock name="anchorblock" font="smallfont" text="Anchored top left" anchorleft="true" anchortop="true"/>
+  </textblocks>
+</data>
